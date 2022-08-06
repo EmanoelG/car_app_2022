@@ -6,7 +6,7 @@ import '../colors.dart';
 class AppButton extends StatelessWidget {
   var login;
   Function funcao;
-  bool _showProg=false;
+  bool _showProg = false;
   AppButton(this.login, this.funcao, this._showProg);
 
   @override
@@ -15,14 +15,18 @@ class AppButton extends StatelessWidget {
       height: 46,
       child: RaisedButton(
           color: colorButton,
-          child: _showProg==false? Text(
-            login,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-          ):  Center(child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-          )),
-          onPressed: funcao),
+          child: _showProg == false
+              ? Text(
+                  login,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                )
+              : Center(
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                ),
+          onPressed: () => funcao),
     );
-    ;
   }
 }

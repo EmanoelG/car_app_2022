@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:list_car/pages/login/login_bloc.dart';
-import 'package:list_car/pages/login/usuario.dart';
-import 'package:list_car/pages/widgets/app_button.dart';
-import 'package:list_car/pages/widgets/app_textInput.dart';
-import 'package:list_car/util/alert.dart';
-import 'package:list_car/util/nav.dart';
+import 'package:new_car_app/pages/login/usuario.dart';
+
+import '../../util/alert.dart';
+import '../../util/nav.dart';
 import '../carro/home_page.dart';
+import '../widgets/app_button.dart';
+import '../widgets/app_textInput.dart';
 import 'api_response.dart';
 import 'package:auth_buttons/auth_buttons.dart';
+
+import 'login_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -71,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
               'Login',
               'Digite o nome do usuário ',
               controller: _tlogin,
-              validator: _validatelogin,
+              validator: ((value) => _validatelogin(value!)),
               type: TextInputType.name,
               textInputAction: TextInputAction.next,
             ),
@@ -81,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               'Digite sua senha',
               obscure: true,
               controller: _tsenha,
-              validator: _validateSenha,
+              validator:((value) => _validateSenha(value!)),
               type: TextInputType.number,
               focus: _focusSenha,
               textInputAction: TextInputAction.next,
@@ -96,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               height: 46,
               margin: EdgeInsets.only(top: 20),
-              child: GoogleAuthButton(
+              child:const GoogleAuthButton(
                 text: 'Seguir com google',
                 style: AuthButtonStyle(
                   textStyle: TextStyle(
@@ -117,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onClickLogin() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     var logins = _tlogin.text;
@@ -141,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
     if (value.isEmpty) {
       return 'Digite o login ! ';
     }
-    return null;
+    return '';
   }
 
   String _validateSenha(String value) {
@@ -151,6 +153,6 @@ class _LoginPageState extends State<LoginPage> {
     if (value.length < 3) {
       return 'A senha precisa ter pelo menos 3 caracter !';
     }
-    return null;
+    return '';
   }
 }

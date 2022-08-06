@@ -1,16 +1,15 @@
 import 'dart:async';
-
-import 'package:list_car/util/sql/entity.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../pages/carro/carro.dart';
 import 'db_helper.dart';
+import 'entity.dart';
 
 // Data Access Object
 abstract class BaseDAO<T extends Entity> {
   String get tableName;
   T fromJson(Map<String, dynamic> map);
-  Future<Database> get db => DatabaseHelper.getInstance().db;
+  Future<Database> get db => DatabaseHelper.getInstance().dbs;
 
   Future<int> save(T entity) async {
     var dbClient = await db;
@@ -24,7 +23,7 @@ abstract class BaseDAO<T extends Entity> {
     return await query('select * from $tableName ');
   }
 
-  Future<List<T>> query(String sql, [List<Object> arguments]) async {
+  Future<List<T>> query(String sql, [List<Object>? arguments]) async {
     final dbClient = await db;
 
     final list = await dbClient.rawQuery(sql, arguments);
@@ -32,7 +31,7 @@ abstract class BaseDAO<T extends Entity> {
     return list.map<T>((json) => fromJson(json)).toList();
   }
 
-  Future<T> findById(int id) async {
+  Future findById(int id) async {
     var dbClient = await db;
     final list =
         await dbClient.rawQuery('select * from $tableName where id = ?', [id]);
@@ -50,7 +49,7 @@ abstract class BaseDAO<T extends Entity> {
     return exists;
   }
 
-  Future<int> count() async {
+  Future<int?> count() async {
     final dbClient = await db;
     final list = await dbClient.rawQuery('select count(*) from $tableName');
     return Sqflite.firstIntValue(list);

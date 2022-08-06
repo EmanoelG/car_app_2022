@@ -48,6 +48,7 @@ dependencies:
   flutter_share: ^2.0.0
   google_maps_flutter: ^2.1.10
   auth_buttons: ^3.0.0
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
   flutter_test:

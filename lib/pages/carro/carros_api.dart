@@ -1,12 +1,15 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
+import '../login/api_response.dart';
 import '../login/usuario.dart';
 import 'carro.dart';
 import 'favoritos/carro_dao.dart';
+import 'uploado_service.dart';
 
 class TipoCarro {
   static final String classicos = "classicos";
@@ -21,10 +24,10 @@ class CarrosApi {
       var url =
           'https://carros-springboot.herokuapp.com/api/v2/carros/tipo/$tipoCarro';
       print(url);
-      Usuario user = await Usuario.get();
+      Usuario? user = await Usuario.get();
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${user.token}",
+        "Authorization": "Bearer ${user!.token}",
       };
       var response = await http.get(Uri.parse(url), headers: headers);
       print('status > ${response.statusCode}');
@@ -44,6 +47,7 @@ class CarrosApi {
     } on Exception catch (e) {
       print('e>> $e');
     }
+    throw Exception();
   }
 
   static Future<ApisResponse<bool>> save(Carros c, String filePath) async {
@@ -58,10 +62,10 @@ class CarrosApi {
           c.urlFoto = urlFoto;
         }
       }
-      Usuario user = await Usuario.get();
+      Usuario? user = await Usuario.get();
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${user.token}",
+        "Authorization": "Bearer ${user!.token}",
       };
       var url = 'https://carros-springboot.herokuapp.com/api/v2/carros';
       if (c.id != null) {
@@ -75,10 +79,17 @@ class CarrosApi {
           : http.put(Uri.parse(url), body: json, headers: headers));
       print("STATUS CODE: " + response.statusCode.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
-        Map mapResponse = convert.json.decode(response.body);
-        Carros car = Carros.fromJson(mapResponse);
-        print('Novo carros: ${car.id}');
-        return ApisResponse.ok(true);
+        //  Map mapResponse = convert.json.decode(response.body);
+        //  Carros car = Carros.fromJson(mapResponse);
+        //  print('Novo carros: ${car.id}');
+        //  return ApisResponse.ok(true);
+
+        final mapResponse =
+            jsonDecode(response.toString()).cast<Map<String, dynamic>>();
+
+        return mapResponse
+            .map<Carros>((json) => Carros.fromJson(json))
+            .toList();
       }
       if (response.body == null || response.body.isEmpty) {
         Map mapResponse = convert.json.decode(response.body);
@@ -94,10 +105,10 @@ class CarrosApi {
 
   static delete(c) async {
     try {
-      Usuario user = await Usuario.get();
+      Usuario? user = await Usuario.get();
       Map<String, String> headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer ${user.token}",
+        "Authorization": "Bearer ${user!.token}",
       };
       var url = 'https://carros-springboot.herokuapp.com/api/v2/carros/${c.id}';
 
@@ -108,10 +119,16 @@ class CarrosApi {
 
       print("STATUS CODE: " + response.statusCode.toString());
       if (response.statusCode == 201 || response.statusCode == 200) {
-        Map mapResponse = convert.json.decode(response.body);
-        Carros car = Carros.fromJson(mapResponse);
-        print('Novo carros: ${car.id}');
-        return ApisResponse.ok(true);
+        // Map mapResponse = convert.json.decode(response.body);
+        // Carros car = Carros.fromJson(mapResponse);
+        // print('Novo carros: ${car.id}');
+        // return ApisResponse.ok(true);
+
+        final mapResponse =
+            jsonDecode(response.toString()).cast<Map<String, dynamic>>();
+        return mapResponse
+            .map<Carros>((json) => Carros.fromJson(json))
+            .toList();
       }
       if (response.body == null || response.body.isEmpty) {
         Map mapResponse = convert.json.decode(response.body);

@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:list_car/pages/login/usuario.dart';
-import 'package:list_car/util/nav.dart';
+import 'package:new_car_app/pages/login/usuario.dart';
+import 'package:new_car_app/util/nav.dart';
 
 import 'pages/login/login_page.dart';
-
 
 class DrawerList extends StatefulWidget {
   @override
@@ -13,29 +12,27 @@ class DrawerList extends StatefulWidget {
 
 class _DrawerListState extends State<DrawerList> {
   UserAccountsDrawerHeader _heard(Usuario user) {
- 
     return UserAccountsDrawerHeader(
-      accountName: Text(user.nome),
-      accountEmail: Text(user.email),
+      accountName: Text(user.nome ?? ''),
+      accountEmail: Text(user.email ?? ''),
       currentAccountPicture: CircleAvatar(
-        backgroundImage: NetworkImage(user.urlFoto),
+        backgroundImage: NetworkImage(user.urlFoto ?? ''),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<Usuario> future = Usuario.get();
-    
+    Future future = Usuario.get();
 
     return SafeArea(
       child: Drawer(
         child: ListView(
           children: <Widget>[
-            FutureBuilder<Usuario>(
+            FutureBuilder<dynamic>(
               future: future,
               builder: (context, snapshot) {
-                Usuario user = snapshot.data;
+                Usuario? user = snapshot.data;
                 return user != null
                     ? _heard(user)
                     : Container(
@@ -45,26 +42,26 @@ class _DrawerListState extends State<DrawerList> {
             ),
             ListTile(
               leading: Icon(Icons.star),
-              title: Text('Favoritos'),
-              subtitle: Text('Mais informações'),
-              trailing: Icon(Icons.arrow_forward),
+              title: const Text('Favoritos'),
+              subtitle: const Text('Mais informações'),
+              trailing: const Icon(Icons.arrow_forward),
               onTap: () {
                 print('clicou favoritos');
               },
             ),
             ListTile(
-              leading: Icon(Icons.help),
-              title: Text('Ajuda'),
-              subtitle: Text('Mais informações'),
-              trailing: Icon(Icons.arrow_forward),
+              leading: const Icon(Icons.help),
+              title: const Text('Ajuda'),
+              subtitle: const Text('Mais informações'),
+              trailing: const Icon(Icons.arrow_forward),
               onTap: () {
                 print('clicou favoritos');
               },
             ),
             ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Exit'),
-              trailing: Icon(Icons.arrow_forward),
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Exit'),
+              trailing: const Icon(Icons.arrow_forward),
               onTap: () => _onClickLogout(context),
             )
           ],

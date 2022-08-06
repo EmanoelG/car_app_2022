@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:list_car/pages/carro/carros_listview.dart';
-import 'package:list_car/pages/carro/carros_model.dart';
-import 'package:list_car/util/text_error.dart';
+import '../../util/text_error.dart';
 import 'carro.dart';
+import 'carros_listview.dart';
+import 'carros_model.dart';
 
 class CarrosPage extends StatefulWidget {
   String tipo;
 
-  CarrosPage({this.tipo});
+  CarrosPage({required this.tipo});
 
   @override
   _CarrosPageState createState() => _CarrosPageState();
@@ -16,7 +16,7 @@ class CarrosPage extends StatefulWidget {
 
 class _CarrosPageState extends State<CarrosPage>
     with AutomaticKeepAliveClientMixin<CarrosPage> {
-  List<Carros> carros;
+  late List<Carros> carros;
   var _modelCarro = ModelCar();
   String get tipo => widget.tipo;
 

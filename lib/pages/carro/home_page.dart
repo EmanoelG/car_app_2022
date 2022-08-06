@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:list_car/DrawerList.dart';
-import 'package:list_car/pages/carro/carros_api.dart';
-import 'package:list_car/pages/carro/carros_listview.dart';
-import 'package:list_car/pages/carro/carros_page.dart';
-import 'package:list_car/util/alert.dart';
-import 'package:list_car/util/nav.dart';
+import '../../DrawerList.dart';
 import '../../util/nav.dart';
-import 'package:list_car/util/prefs.dart';
+import '../../util/prefs.dart';
 import '../colors.dart';
 import 'carro_form_page.dart';
+import 'carros_api.dart';
+import 'carros_page.dart';
 import 'favoritos/favoritos_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,19 +16,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin<HomePage> {
-  TabController _tabController;
+  late TabController _tabController;
 
   @override
-  Future<void> initState() {
+  initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
 
     Future<int> future = Prefs.getInt('tabIdx');
     future.then((int value) => _tabController.index = value);
 
-    _tabController.addListener(() {
-      Prefs.setInt('tabIdx', _tabController.index);
-    });
+    _tabController.addListener(
+      () {
+        Prefs.setInt('tabIdx', _tabController.index);
+      },
+    );
   }
 
   _initTabs() async {
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage>
         title: Text('Carros'),
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(
               text: 'Clássicos',
             ),
@@ -93,6 +92,6 @@ class _HomePageState extends State<HomePage>
   }
 
   void _onClickAdicionarCarro() {
-    push(context,CarroFormPage());
+    push(context, CarroFormPage());
   }
 }

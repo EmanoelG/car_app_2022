@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class TextUtil extends StatefulWidget {
   String text;
-  double sizeLetra = 18.0;
+  double? sizeLetra = 18.0;
   TextUtil(this.text, {this.sizeLetra}) : super();
 
   @override

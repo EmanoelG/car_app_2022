@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class AppTextInput extends StatefulWidget {
   var label;
   var hint;
-  bool obscure;
-  TextEditingController controller;
-  FormFieldValidator<String> validator;
-  TextInputType type;
-  TextInputAction textInputAction;
-  FocusNode focus;
-  FocusNode nextFocus;
+  bool? obscure;
+  TextEditingController? controller;
+  FormFieldValidator<String>? validator;
+  TextInputType? type;
+  TextInputAction? textInputAction;
+  FocusNode? focus;
+  FocusNode? nextFocus;
 
   AppTextInput(this.label, this.hint,
       {this.obscure = false,
@@ -44,23 +44,21 @@ class _AppTextInputState extends State<AppTextInput> {
         if (widget.nextFocus != null) {
           FocusScope.of(context).requestFocus(widget.nextFocus);
         }
-        ;
       },
       textInputAction: widget.textInputAction,
-      style: TextStyle(fontSize: 18),
+      style: const TextStyle(fontSize: 18),
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelStyle: TextStyle(
+        border: const OutlineInputBorder(),
+        labelStyle: const TextStyle(
           color: Colors.black,
         ),
         labelText: widget.label,
         hintText: widget.hint,
-        hintStyle: TextStyle(
+        hintStyle: const TextStyle(
           color: Colors.red,
         ),
       ),
-      obscureText: widget.obscure,
+      obscureText: widget.obscure == null ? false : true,
     );
-    ;
   }
 }

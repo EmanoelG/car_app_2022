@@ -9,16 +9,16 @@ class DatabaseHelper {
 
   factory DatabaseHelper() => _instance;
 
-  static Database _db;
+ late  Database db;
 
-  Future<Database> get db async {
-    if (_db != null) {
-      print('_db>> $_db');
-      return _db;
+  Future<Database> get dbs async {
+    if (db != null) {
+      print('db>> $db');
+      return db;
     }
-    _db = await _initDb();
-    print('_db>>>> $_db');
-    return _db;
+    db = await _initDb();
+    print('db>>>> $db');
+    return db;
   }
 
   Future _initDb() async {

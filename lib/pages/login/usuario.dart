@@ -1,16 +1,18 @@
 import 'dart:convert' as convert;
+import 'dart:convert';
 
-import 'package:list_car/util/prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../util/prefs.dart';
+
 class Usuario {
-  int id;
-  String login;
-  String nome;
-  String email;
-  String urlFoto;
-  String token;
-  List<String> roles;
+  int? id;
+  String? login;
+  String? nome;
+  String? email;
+  String? urlFoto;
+  String? token;
+  List<String>? roles;
 
   Usuario(
       {this.id,
@@ -49,26 +51,26 @@ class Usuario {
     Prefs.setString("user.prefs", json);
   }
 
-  static Future<Usuario> get() async {
+  static Future get() async {
     print('gettt !!!');
     var prefs = await SharedPreferences.getInstance();
     // prefs.
     bool contains = prefs.containsKey("user.prefs");
     print('Contain: $contains');
     if (contains == true) {
-      String js = prefs.getString("user.prefs") ?? null;
+      String js = prefs.getString("user.prefs") ?? '';
       print('js:>>> ' + js);
 
       if (js == "") {
         return null;
       }
 
-      Map map = convert.json.decode(js);
-      Usuario user = Usuario.fromJson(map);
-      print(user);
-      return user;
-    } else
+      final maps = jsonDecode(js).cast<Map<String, dynamic>>();
+
+      return maps.map<Usuario>((json) => Usuario.fromJson(json)).toList();
+    } else {
       return null;
+    }
   }
 
   @override

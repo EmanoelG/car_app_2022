@@ -11,9 +11,9 @@ import 'carro.dart';
 import 'carros_api.dart';
 
 class CarroFormPage extends StatefulWidget {
-  final Carros car;
+   Carros? car;
 
-  const CarroFormPage({required this.car});
+  CarroFormPage({this.car});
 
   @override
   State<StatefulWidget> createState() => _CarroFormPageState();
@@ -33,7 +33,7 @@ class _CarroFormPageState extends State<CarroFormPage> {
   late XFile _file;
   late String _imagePath;
 
-  Carros get carro => widget.car;
+  Carros? get carro => widget.car;
 
   @override
   void initState() {
@@ -41,9 +41,9 @@ class _CarroFormPageState extends State<CarroFormPage> {
 
     // Copia os dados do carro para o form
     if (carro != null) {
-      tNome.text = carro.nome;
-      tDesc.text = carro.descricao;
-      _radioIndex = getTipoInt(carro);
+      tNome.text = carro!.nome;
+      tDesc.text = carro!.descricao;
+      _radioIndex = getTipoInt(carro!);
     }
   }
 
@@ -52,7 +52,7 @@ class _CarroFormPageState extends State<CarroFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          carro != null ? carro.nome : "Novo Carro",
+          carro != null ? carro!.nome : "Novo Carro",
         ),
       ),
       body: Container(
@@ -239,7 +239,7 @@ CachedNetworkImage(
 
     // Cria o carro
     var c = carro;
-    c.nome = tNome.text;
+    c!.nome = tNome.text;
     c.descricao = tDesc.text;
     c.tipo = _getTipo();
 
@@ -250,11 +250,16 @@ CachedNetworkImage(
     });
 
     print("Salvar o carro $c");
-    ApisResponse<bool> response =  CarrosApi.save(c, _imagePath) as ApisResponse<bool>;
+    ApisResponse<bool> response =
+        CarrosApi.save(c, _imagePath) as ApisResponse<bool>;
     if (response.ok) {
-       alert(context, "Carro salvo !", callback: () {
-        Navigator.pop(context);
-      },);
+      alert(
+        context,
+        "Carro salvo !",
+        callback: () {
+          Navigator.pop(context);
+        },
+      );
     } else {
       print('ERRORR');
       alert(context, response.msg);

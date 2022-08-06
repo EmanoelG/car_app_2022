@@ -22,6 +22,7 @@ abstract class CarrosModel with Store {
       this.carros = await CarrosApi.getCarros(tipoCarro);
     } on Exception catch (e) {
       error = e;
+      throw Exception();
     }
   }
 }

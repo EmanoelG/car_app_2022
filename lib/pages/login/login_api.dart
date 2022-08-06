@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:list_car/pages/login/api_response.dart';
-import 'package:list_car/pages/login/usuario.dart';
 
+import 'api_response.dart';
+import 'usuario.dart';
 
 class LoginApi {
   static Future<ApisResponse<Usuario>> login(String login, String senha) async {
@@ -22,7 +22,10 @@ class LoginApi {
 
       Map mapResponse = json.decode(response.body);
       if (response.statusCode == 200) {
-        final user = Usuario.fromJson(mapResponse);
+        // final user = Usuario.fromJson(mapResponse);
+
+        final user =
+            jsonDecode(mapResponse.toString()).cast<Map<String, dynamic>>();
         user.save();
         Usuario.get();
 

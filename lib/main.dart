@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:new_car_app/pages/carro/favoritos/favoritos_provider/favorito_service_provider.dart';
+import 'package:new_car_app/pages/widgets/splashpage.dart';
 
 import 'package:provider/provider.dart';
 import 'pages/colors.dart';

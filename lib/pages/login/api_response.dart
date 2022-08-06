@@ -1,12 +1,13 @@
-class ApisResponse<T>{
-  bool ok;
-  String msg;
-  T result;
+class ApisResponse<T> {
+  late bool ok;
+  late String msg;
+  late T result;
 
-  ApisResponse.ok(this.result){
-    ok=true;
+  ApisResponse.ok(this.result) {
+    ok = true;
   }
-  ApisResponse.error(this.msg){
-    ok=false;
+
+  ApisResponse.error(this.msg) {
+    ok = false;
   }
 }

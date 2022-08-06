@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'dart:io';
-import 'package:list_car/util/http_helper.dart' as http;
+// import 'package:list_car/util/http_helper.dart' as http;
 import 'package:http/http.dart';
 import 'package:path/path.dart' as path;
 
@@ -28,7 +28,7 @@ class UploadApi {
       print("http.upload: " + url);
       print("params: " + json);
 
-      final response = await http.post(url, body: json).timeout(
+      final response = await post(Uri.parse(url), body: json).timeout(
             Duration(seconds: 120),
             onTimeout: _onTimeOut,
           );

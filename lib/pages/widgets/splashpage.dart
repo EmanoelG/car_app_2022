@@ -9,7 +9,7 @@ import '../login/login_page.dart';
 import '../login/usuario.dart';
 
 class SplashPage extends StatefulWidget {
-  const SplashPage({Key key}) : super(key: key);
+  const SplashPage();
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -17,21 +17,23 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   @override
-  void initState() {
+  initState() {
     // Future.delayed(Duration(seconds: 15), () {
     //     push(context, LoginPage());
     //   });
 
     //Inicializa banco de dados.
-    Future futureA = DatabaseHelper.getInstance().db;
+    Future futureA = DatabaseHelper.getInstance().dbs;
     Future futureB = Future.delayed(Duration(seconds: 3));
     // Verifica se o usuario manteve logado.
-    Future<Usuario> futureC = Usuario.get();
-    futureC.then((Usuario user) {
-      if (user != null) {
-        push(context, HomePage(), replace: false);
-      }
-    });
+    Future futureC = Usuario.get();
+    futureC.then(
+      (user) {
+        if (user != null) {
+          push(context, HomePage(), replace: false);
+        }
+      },
+    );
 
     Future.wait([futureA, futureB, futureC]).then(
       (List values) {

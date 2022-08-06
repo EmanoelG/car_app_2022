@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:list_car/pages/carro/carro_page.dart';
-import 'package:list_car/util/nav.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_share/flutter_share.dart';
+import '../../util/nav.dart';
 import 'carro.dart';
-import 'package:share/share.dart';
+import 'carro_page.dart';
 
 class CarrosListView extends StatelessWidget {
   List<Carros> carr;
@@ -45,8 +45,7 @@ class CarrosListView extends StatelessWidget {
           children: <Widget>[
             Center(
                 child: CachedNetworkImage(
-              imageUrl: c.urlFoto ??
-                  "https://th.bing.com/th/id/OIP.Ruy9jl-Xtz-04gKaU5F84QHaE9?pid=ImgDet&rs=1",
+              imageUrl: c.urlFoto,
               width: 350,
             )),
             Text(
@@ -54,7 +53,7 @@ class CarrosListView extends StatelessWidget {
               maxLines: 1,
               style: TextStyle(fontSize: 25),
             ),
-            Text(
+            const Text(
               'Descrição ',
               maxLines: 1,
               style: TextStyle(fontSize: 16),
@@ -128,7 +127,11 @@ class CarrosListView extends StatelessWidget {
     );
   }
 
-  void _onClickShare(BuildContext context, Carros c) {
-    Share.share(c.urlFoto);
+  Future<void> _onClickShare(BuildContext context, Carros c) async {
+    await FlutterShare.share(
+        title: 'Example share',
+        text: 'Example share text',
+        linkUrl: c.urlFoto,
+        chooserTitle: 'Example Chooser Title');
   }
 }

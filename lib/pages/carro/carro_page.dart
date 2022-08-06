@@ -101,8 +101,7 @@ class _CarroPageState extends State<CarroPage> {
           children: <Widget>[
             Center(
                 child: CachedNetworkImage(
-              imageUrl: c.urlFoto ??
-                  "https://th.bing.com/th/id/OIP.Ruy9jl-Xtz-04gKaU5F84QHaE9?pid=ImgDet&rs=1",
+              imageUrl: c.urlFoto,
               width: 350,
             )),
             Container(
