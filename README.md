@@ -1,6 +1,6 @@
 # new_car_app
 
-A new Flutter project.
+App Lista de carro, utilizando flutter 3.0.5 
 
 ## Getting Started
 
